@@ -22,7 +22,6 @@ NOTE: There's a lot more than 5 columns:
 
 <div markdown="1" style="
     display: block; 
-    /* background-color: blue;  */
     width: 100%; 
     overflow-x:auto
 ">
@@ -45,7 +44,6 @@ HEAD OF CLEANED DATAFRAME
 
 <div markdown="1" style="
     display: block; 
-    /* background-color: blue;  */
     width: 100%; 
     overflow-x:auto
 ">
@@ -60,12 +58,11 @@ HEAD OF CLEANED DATAFRAME
 
 </div>
 
-SOME SUMMARY STATS
-Note: Notable outliers that gave heavy right skew. Dropped everything above 3 SD.
+SOME SUMMARY STATS  
+Note: Outliers gave heavy right skew. Dropped everything above 3 SD.
 
 <div markdown="1" style="
     display: block; 
-    /* background-color: blue;  */
     width: 100%; 
     overflow-x:auto
 ">
@@ -84,6 +81,39 @@ Note: Notable outliers that gave heavy right skew. Dropped everything above 3 SD
 </div>
 
 ## PCA
+
+Proportion of Variance Explained by Principal Components:
+
+<div markdown="1" style="
+    display: block; 
+    width: 100%; 
+    overflow-x:auto
+">
+
+|       | Proportion of Variance Explained |
+| :---- | -------------------------------: |
+| PC1   |                       0.67373785 |
+| PC2   |                       0.13383938 |
+| PC3   |                       0.10128083 |
+| Total |                       0.90885803 |
+
+</div>
+
+Principle Component Loadings
+
+<div markdown="1" style="
+    display: block; 
+    width: 100%; 
+    overflow-x:auto
+">
+
+|     |       EXT_E |      EST_E | AGR_E       | CSN_E      | OPN_E      |
+| :-- | ----------: | ---------: | ----------- | ---------- | ---------- |
+| PC1 |  0.99918581 | 0.01746287 | 0.01771672  | 0.02861412 | 0.01378835 |
+| PC2 | -0.03205508 | 0.35582254 | 0.87481955  | 0.30975886 | 0.10537073 |
+| PC3 |  -0.0189014 | 0.74401244 | -0.47647344 | 0.46040521 | 0.08419229 |
+
+</div>
 
 "Hypothesis: The 5-dimensional OCEAN data set can be represented in 3 dimensions visualized by 27 clusters of points in a 3x3x3 cube."
 
