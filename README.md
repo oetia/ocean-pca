@@ -59,7 +59,7 @@ HEAD OF CLEANED DATAFRAME
 </div>
 
 SOME SUMMARY STATS  
-Note: Outliers gave heavy right skew. Dropped everything above 3 SD.
+Note: Outliers gave heavy right skew (some people took on avg 7 hours to respond to each question). Dropped everything above 3 SD.
 
 <div markdown="1" style="
     display: block; 
