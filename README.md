@@ -41,6 +41,8 @@ I'm not sure how I'm supposed to deal with this, so I just created a new \_E col
 
 ## Data Used
 
+HEAD OF CLEANED DATAFRAME
+
 <div markdown="1" style="
     display: block; 
     /* background-color: blue;  */
@@ -55,13 +57,11 @@ I'm not sure how I'm supposed to deal with this, so I just created a new \_E col
 |   2 | 7868.5 | 7315.1 | 7616.6 | 4394.3 | 2472.8 |
 |   3 | 5438.6 | 4069.4 | 5439.5 | 4422.1 | 3855.4 |
 |   4 | 4958.7 | 3608.7 | 4431.5 | 3708.6 | 3581.6 |
-|   5 | 3177.2 | 3435.7 | 3131.4 | 2923.9 | 2932.7 |
-|   6 | 3216.2 | 2270.2 | 3035.3 | 1849.3 | 2232.5 |
-|   7 | 7047.7 | 3103.9 | 4707.2 |   5832 | 3077.4 |
-|   8 | 6417.8 | 7023.9 | 4461.4 | 7340.4 | 6568.5 |
-|   9 | 3436.8 | 2537.2 | 2991.4 | 5591.3 | 2576.8 |
 
 </div>
+
+SOME SUMMARY STATS
+Note: Notable outliers that gave heavy right skew. Dropped everything above 3 SD.
 
 <div markdown="1" style="
     display: block; 
@@ -85,6 +85,8 @@ I'm not sure how I'm supposed to deal with this, so I just created a new \_E col
 
 ## PCA
 
-### Hypothesis: The 5-dimensional OCEAN data set can be represented in 3 dimensions visualized by 27 clusters of points in a 3x3x3 cube.
+"Hypothesis: The 5-dimensional OCEAN data set can be represented in 3 dimensions visualized by 27 clusters of points in a 3x3x3 cube."
+
+¯\\\_(ツ)\_/¯
 
 <iframe src="images/pca.html" width="100%" height="500px" frameBorder=0></iframe>
