@@ -36,7 +36,7 @@ NOTE: There's a lot more than 5 columns:
 
 </div>
 
-I'm not sure how I'm supposed to deal with this, so I just created a new \_E column with an individual's average time for that trait.
+I'm not sure how I'm supposed to deal with this, so I just created a new \_E column for each trait with an individual's average time for said trait.
 
 ## Data Used
 
@@ -82,6 +82,12 @@ Note: Outliers gave heavy right skew. Dropped everything above 3 SD.
 
 ## PCA
 
+"Hypothesis: The 5-dimensional OCEAN data set can be represented in 3 dimensions visualized by 27 clusters of points in a 3x3x3 cube."
+
+¯\\\_(ツ)\_/¯
+
+<iframe src="images/pca.html" width="100%" height="500px" frameBorder=0></iframe>
+
 Proportion of Variance Explained by Principal Components:
 
 <div markdown="1" style="
@@ -114,9 +120,3 @@ Principal Component Loadings
 | PC3                 |  -0.0189014 | 0.74401244 | -0.47647344 | 0.46040521 | 0.08419229 |
 
 </div>
-
-"Hypothesis: The 5-dimensional OCEAN data set can be represented in 3 dimensions visualized by 27 clusters of points in a 3x3x3 cube."
-
-¯\\\_(ツ)\_/¯
-
-<iframe src="images/pca.html" width="100%" height="500px" frameBorder=0></iframe>
