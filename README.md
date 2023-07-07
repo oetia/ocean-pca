@@ -86,7 +86,7 @@ Note: Outliers gave heavy right skew (some people took on avg 7 hours to respond
 
 ¯\\\_(ツ)\_/¯
 
-<iframe src="images/pca.html" width="100%" height="500px" frameBorder=0></iframe>
+<iframe src="images/pca-normalized.html" width="100%" height="500px" frameBorder=0></iframe>
 
 Proportion of Variance Explained by Principal Components:
 
