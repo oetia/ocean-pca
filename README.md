@@ -59,7 +59,7 @@ HEAD OF CLEANED DATAFRAME
 </div>
 
 SOME SUMMARY STATS  
-Note: Outliers gave heavy right skew (some people took on avg 7 hours to respond to each question). Dropped everything above 3 SD.
+Note: Outliers gave heavy right skew (some people took on avg 7 hours to respond to each question). Table below describes data after dropping entries above 3 SD.
 
 <div markdown="1" style="
     display: block; 
