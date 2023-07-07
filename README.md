@@ -162,10 +162,12 @@ Proportion of Variance Explained by Principal Components:
 
 | Principal Component | Proportion of Variance Explained |
 | :------------------ | -------------------------------: |
-| PC1                 |                       0.67373785 |
-| PC2                 |                       0.13383938 |
-| PC3                 |                       0.10128083 |
-| Total               |                       0.90885803 |
+| PC1                 |                       0.30433279 |
+| PC2                 |                       0.19607052 |
+| PC3                 |                       0.18667428 |
+| Total               |                       0.68707758 |
+
+Only 68.7% of the variance was explained. That's quite a lot of information loss.
 
 </div>
 
