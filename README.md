@@ -5,7 +5,7 @@
 pca.ipynb - contains data cleaning code & 3d plot of principal components  
 sample-rows.ipynb - samples 10k rows from the full dataset (https://www.kaggle.com/datasets/tunguz/big-five-personality-test)
 
-## Data Cleaning
+## Preprocessing
 
 The five dimensions of the data set are described by the columns:
 
@@ -38,9 +38,7 @@ NOTE: There's a lot more than 5 columns:
 
 I'm not sure how I'm supposed to deal with this, so I just created a new \_E column for each trait with an individual's average time for said trait.
 
-## Data Used
-
-HEAD OF CLEANED DATAFRAME
+RESULTING DATAFRAME
 
 <div markdown="1" style="
     display: block; 
@@ -58,8 +56,13 @@ HEAD OF CLEANED DATAFRAME
 
 </div>
 
-SOME SUMMARY STATS  
-Note: Outliers gave heavy right skew (some people took on avg 7 hours to respond to each question). Table below describes data after dropping entries above 3 SD. Not sure if '0' should be considered for missingness.
+## Data Cleaning / EDA
+
+There are a number of NaN & 0 values within the dataset. I'm assuming that it doesn't make sense for someone to take exactly 0 milliseconds to answer a question. I'll treat 0 values as a sign of missingness.
+
+I could do permutation tests to test for missingness mechanisms and impute accordingly, but rows with missing data comprise a small portion (<1%) of the dataset. I'll just drop them.
+
+Summary Statistics:
 
 <div markdown="1" style="
     display: block; 
@@ -67,18 +70,79 @@ Note: Outliers gave heavy right skew (some people took on avg 7 hours to respond
     overflow-x:auto
 ">
 
-|       |   EXT_E |   EST_E |   AGR_E |   CSN_E |   OPN_E |
-| :---- | ------: | ------: | ------: | ------: | ------: |
-| count |    9923 |    9923 |    9923 |    9923 |    9923 |
-| mean  |  7855.5 | 5226.46 | 5638.68 | 6031.77 | 4809.95 |
-| std   | 28778.2 | 10946.5 | 12456.3 | 10317.7 | 4612.46 |
-| min   |       0 |       0 |       0 |       0 |       0 |
-| 25%   |  3480.1 | 2819.75 |  3135.9 |  3239.5 |  2827.7 |
-| 50%   |  4574.3 |  3725.9 |  4112.6 |  4330.1 |  3754.4 |
-| 75%   | 6423.85 |  5254.9 | 5698.55 | 6150.85 |  5203.7 |
-| max   |  906174 |  412451 |  507171 |  294300 | 88025.8 |
+|       |       EXT_E |       EST_E |       AGR_E |       CSN_E |       OPN_E |
+| :---- | ----------: | ----------: | ----------: | ----------: | ----------: |
+| count |        9914 |        9914 |        9914 |        9914 |        9914 |
+| mean  |     15302.9 |     8166.03 |      9472.9 |     8403.17 |     5752.01 |
+| std   |      375903 |      135268 |      202282 |      107314 |     27974.2 |
+| min   |        72.1 |       132.3 |        95.2 |        40.2 |          68 |
+| 25%   |     3503.03 |     2838.12 |      3152.1 |        3260 |     2848.75 |
+| 50%   |     4599.25 |     3743.65 |      4131.8 |      4357.1 |     3780.55 |
+| 75%   |     6458.35 |      5277.5 |     5735.52 |     6189.85 |        5250 |
+| max   | 2.63604e+07 | 8.55417e+06 | 1.72713e+07 | 7.55993e+06 | 2.13966e+06 |
 
 </div>
+
+There are clearly some prominent outliers. Someone took over 6 hours on average to answer each question. (I guess they left the tab open for a week)
+
+The data has a VERY heavy right skew, so I'll just drop entries that are more than 3SD above mean.
+
+Variance-Covariance Matrix:
+
+<div markdown="1" style="
+    display: block; 
+    width: 100%; 
+    overflow-x:auto
+">
+
+|       |       EXT_E |       EST_E |       AGR_E |       CSN_E |       OPN_E |
+| :---- | ----------: | ----------: | ----------: | ----------: | ----------: |
+| EXT_E | 8.33389e+08 | 1.13911e+07 |  1.1084e+07 |  1.9823e+07 | 1.02908e+07 |
+| EST_E | 1.13911e+07 | 1.20459e+08 | 1.10395e+07 | 1.80633e+07 | 9.21046e+06 |
+| AGR_E |  1.1084e+07 | 1.10395e+07 | 1.56017e+08 | 1.22064e+07 | 8.93401e+06 |
+| CSN_E |  1.9823e+07 | 1.80633e+07 | 1.22064e+07 | 1.06944e+08 | 1.35804e+07 |
+| OPN_E | 1.02908e+07 | 9.21046e+06 | 8.93401e+06 | 1.35804e+07 | 2.12597e+07 |
+
+</div>
+
+EXT_E variance is significantly larger than the that of other columns. Since PCA maximizes variance explained, it will be dominated by the EXT_E column.  
+Data should be normalized.
+
+Variance-Covariance Matrix After Normalization:
+
+<div markdown="1" style="
+    display: block; 
+    width: 100%; 
+    overflow-x:auto
+">
+
+|       |     EXT_E |     EST_E |     AGR_E |     CSN_E |     OPN_E |
+| :---- | --------: | --------: | --------: | --------: | --------: |
+| EXT_E |         1 | 0.0359518 | 0.0307388 | 0.0663997 | 0.0773118 |
+| EST_E | 0.0359518 |         1 | 0.0805271 |  0.159147 |  0.182005 |
+| AGR_E | 0.0307388 | 0.0805271 |         1 | 0.0944984 |  0.155125 |
+| CSN_E | 0.0663997 |  0.159147 | 0.0944984 |         1 |  0.284811 |
+| OPN_E | 0.0773118 |  0.182005 |  0.155125 |  0.284811 |         1 |
+
+</div>
+
+## Data Used
+
+HEAD OF CLEANED DATAFRAME
+
+<div markdown="1" style="
+    display: block; 
+    width: 100%; 
+    overflow-x:auto
+">
+
+|     |      EXT_E |     EST_E |      AGR_E |      CSN_E |      OPN_E |
+| --: | ---------: | --------: | ---------: | ---------: | ---------: |
+|   0 |  -0.212136 | -0.326806 |  -0.158204 | -0.0562545 |  -0.604234 |
+|   1 |  -0.026321 |  -0.17482 |  -0.154361 |  -0.176064 | -0.0960173 |
+|   2 | -0.0012521 |  0.187227 |   0.155302 |  -0.162265 |  -0.513513 |
+|   3 | -0.0854235 | -0.108499 | -0.0189965 |  -0.159577 |  -0.213654 |
+|   4 |  -0.102047 | -0.150475 | -0.0996967 |  -0.228572 |  -0.273036 |
 
 ## PCA
 
