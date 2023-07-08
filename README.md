@@ -27,9 +27,9 @@ Columns of Interest
 
 </div>
 
-Range of data should fall between [-1, 1]. There are a number of 0 values present in the data. I'm assuming that these are also missing values.
+Range of data should fall between 1-5. There are a number of 0 values present in the data. I'm assuming that these are also missing values.
 
-Values are normalized to be between 1-5 through this mapping:  
+Values are normalized to be between [-1, 1] through this mapping:  
 1 -> -1  
 2 -> -0.5  
 3 -> 0  
