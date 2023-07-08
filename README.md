@@ -1,5 +1,7 @@
 # Ocean PCA
 
+<iframe src="images/pca-e-full.html" width="100%" height="500px" frameBorder=0></iframe>
+
 ## Files
 
 pca.ipynb - contains data cleaning code & 3d plot of principal components  
@@ -7,18 +9,7 @@ sample-rows.ipynb - samples 10k rows from the full dataset (https://www.kaggle.c
 
 ## Preprocessing
 
-The five dimensions of the data set are described by the columns:
-
-1. EXT, EXT_E
-2. EST, EST_E
-3. AGR, AGR_E
-4. CSN, CSN_E
-5. OPN, OPN_E
-
-Referencing the data dictionary provided (data/codebook.txt):  
-"The time spent on each question is also recorded in milliseconds. These are the variables ending in \_E. This was calculated by taking the time when the button for the question was clicked minus the time of the most recent other button click."
-
-NOTE: There's a lot more than 5 columns:
+Columns of Interest
 
 <div markdown="1" style="
     display: block; 
@@ -26,19 +17,29 @@ NOTE: There's a lot more than 5 columns:
     overflow-x:auto
 ">
 
-|     | EXT1_E | EXT2_E | EXT3_E | EXT4_E | EXT5_E | EXT6_E | EXT7_E | EXT8_E | EXT9_E | EXT10_E | EST1_E | EST2_E | EST3_E | EST4_E | EST5_E | EST6_E | EST7_E | EST8_E | EST9_E | EST10_E | AGR1_E | AGR2_E | AGR3_E | AGR4_E | AGR5_E | AGR6_E | AGR7_E | AGR8_E | AGR9_E | AGR10_E | CSN1_E | CSN2_E | CSN3_E | CSN4_E | CSN5_E | CSN6_E | CSN7_E | CSN8_E | CSN9_E | CSN10_E | OPN1_E | OPN2_E | OPN3_E | OPN4_E | OPN5_E | OPN6_E | OPN7_E | OPN8_E | OPN9_E | OPN10_E |
-| --: | -----: | -----: | -----: | -----: | -----: | -----: | -----: | -----: | -----: | ------: | -----: | -----: | -----: | -----: | -----: | -----: | -----: | -----: | -----: | ------: | -----: | -----: | -----: | -----: | -----: | -----: | -----: | -----: | -----: | ------: | -----: | -----: | -----: | -----: | -----: | -----: | -----: | -----: | -----: | ------: | -----: | -----: | -----: | -----: | -----: | -----: | -----: | -----: | -----: | ------: |
-|   0 |   3504 |    777 |    792 |   4037 |   1550 |   3172 |    718 |    751 |    929 |    1576 |   1853 |   2438 |    918 |   1432 |   3773 |   1943 |   1192 |    784 |   1132 |    1269 |   1457 |   1808 |   1940 |   1607 |   4445 |  18342 |   1296 |   1341 |   1928 |    2843 |    839 |  40453 |    999 |   3050 |   2377 |   1312 |   2884 |    977 |    991 |    1024 |    879 |   1896 |   2151 |   3589 |   1040 |   1838 |   1832 |   1635 |   1449 |    4236 |
-|   1 |   7369 |   9328 |  32352 |   2440 |      0 |   2793 |   2952 |   6757 |   5376 |    2081 |   3130 |   2432 |   2759 |   2681 |   9033 |   2253 |   2583 |   2800 |   3056 |    2688 |   4598 |   1985 |   3320 |   1769 |   5095 |   4263 |   2832 |   4650 |   2840 |    6135 |   2433 |  11713 |   1952 |   4116 |   8713 |   4706 |   2712 |   1558 |   1301 |    3312 |  10551 |   3032 |   2188 |   3320 |   4817 |   8166 |   3644 |   4408 |   2570 |    1282 |
-|   2 |   5743 |   2483 |   3179 |   1928 |   2386 |   4312 |  37930 |   5480 |   3312 |   11932 |   2809 |   3813 |  13646 |      0 |  15644 |   2676 |   1912 |  18584 |  12081 |    1986 |   1340 |   1557 |   3060 |  11422 |   1715 |   2189 |   1233 |   2328 |    977 |   50345 |   2057 |  10867 |   1400 |   1879 |   1575 |   2452 |   1692 |  19053 |      0 |    2968 |   1866 |   1665 |   3831 |   2367 |   1979 |   1782 |   4436 |   1963 |   2788 |    2051 |
-|   3 |   2615 |   6207 |   4718 |   9277 |   4268 |   9874 |   5894 |   3154 |   2754 |    5625 |   8257 |   3382 |   5822 |   4442 |   4076 |   2926 |   5760 |   2297 |   2098 |    1634 |   4905 |   2982 |   9363 |   2516 |   3424 |  14042 |   3368 |   3818 |   7256 |    2721 |   7107 |   4277 |   7453 |   2594 |   3134 |   4094 |   4124 |   3320 |   4600 |    3518 |   6517 |   3408 |   4282 |   2696 |   5798 |   5680 |   3068 |   2467 |   2626 |    2012 |
-|   4 |  11476 |   3147 |   3962 |   6104 |   3065 |   6817 |   3354 |   2286 |   5751 |    3625 |   2626 |   2425 |   2551 |   2457 |   3908 |   3169 |   1978 |   4317 |   4046 |    8610 |   5178 |   4551 |   3530 |   5492 |   7056 |   4090 |   3303 |   5084 |   3331 |    2700 |   5341 |   1299 |   3175 |   4061 |   5031 |   4757 |   2654 |   3521 |   4262 |    2985 |   3547 |   3545 |   2431 |   3839 |   9352 |   5067 |   2448 |   2119 |   1825 |    1643 |
+|     | EXT1 | EXT2 | EXT3 | EXT4 | EXT5 | EXT6 | EXT7 | EXT8 | EXT9 | EXT10 | EST1 | EST2 | EST3 | EST4 | EST5 | EST6 | EST7 | EST8 | EST9 | EST10 | AGR1 | AGR2 | AGR3 | AGR4 | AGR5 | AGR6 | AGR7 | AGR8 | AGR9 | AGR10 | CSN1 | CSN2 | CSN3 | CSN4 | CSN5 | CSN6 | CSN7 | CSN8 | CSN9 | CSN10 | OPN1 | OPN2 | OPN3 | OPN4 | OPN5 | OPN6 | OPN7 | OPN8 | OPN9 | OPN10 |
+| --: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ----: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ----: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ----: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ----: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ----: |
+|   0 |    1 |    5 |    1 |    5 |    1 |    1 |    1 |    5 |    1 |     5 |    4 |    2 |    4 |    2 |    4 |    4 |    4 |    4 |    4 |     4 |    4 |    4 |    2 |    1 |    4 |    2 |    5 |    2 |    1 |     2 |    2 |    4 |    4 |    3 |    1 |    4 |    4 |    4 |    2 |     4 |    4 |    2 |    4 |    2 |    5 |    1 |    5 |    4 |    4 |     4 |
+|   1 |    5 |    2 |    4 |    2 |    0 |    2 |    5 |    2 |    5 |     4 |    5 |    5 |    5 |    5 |    2 |    4 |    2 |    2 |    2 |     1 |    2 |    4 |    1 |    4 |    2 |    2 |    1 |    4 |    2 |     3 |    1 |    4 |    4 |    1 |    1 |    1 |    4 |    3 |    4 |     2 |    3 |    1 |    3 |    1 |    4 |    4 |    4 |    2 |    4 |     2 |
+|   2 |    4 |    1 |    5 |    2 |    5 |    2 |    4 |    4 |    4 |     2 |    2 |    5 |    2 |    0 |    1 |    2 |    4 |    1 |    2 |     3 |    1 |    5 |    1 |    5 |    1 |    5 |    1 |    5 |    5 |     5 |    1 |    5 |    2 |    4 |    4 |    1 |    2 |    2 |    0 |     2 |    4 |    5 |    5 |    4 |    4 |    1 |    2 |    2 |    4 |     4 |
+|   3 |    1 |    3 |    3 |    4 |    4 |    3 |    2 |    5 |    1 |     5 |    5 |    3 |    5 |    1 |    1 |    4 |    2 |    2 |    5 |     5 |    2 |    3 |    3 |    4 |    2 |    3 |    2 |    3 |    3 |     3 |    2 |    5 |    4 |    5 |    1 |    3 |    4 |    4 |    2 |     3 |    4 |    3 |    4 |    2 |    3 |    2 |    3 |    3 |    3 |     4 |
+|   4 |    2 |    1 |    4 |    2 |    4 |    2 |    4 |    3 |    2 |     4 |    3 |    3 |    4 |    2 |    4 |    4 |    4 |    3 |    3 |     3 |    1 |    5 |    1 |    4 |    1 |    4 |    1 |    4 |    5 |     4 |    4 |    4 |    4 |    2 |    2 |    4 |    2 |    2 |    2 |     2 |    4 |    1 |    5 |    1 |    5 |    1 |    5 |    2 |    4 |     4 |
 
 </div>
 
-I'm not sure how I'm supposed to deal with this, so I just created a new \_E column for each trait with an individual's average time for said trait.
+Range of data should fall between 1-5. There are a number of 0 values present in the data. I'm assuming that these are also missing values.
 
-RESULTING DATAFRAME
+Values are normalized to be between 1-5 through this mapping:  
+1 -> -1  
+2 -> -0.5  
+3 -> 0  
+4 -> 0.5  
+5 -> 1
+
+To account for polarity, questions with negative polarity have their corresponding columns multiplied by -1.
+
+\_E columns are created through taking the the mean for a trait's 1-10 question responses.  
+NOTE: NaN values are completely ignored when calculating mean. If a person only responded to 9 questions, the sum is divided by 9.
 
 <div markdown="1" style="
     display: block; 
@@ -46,23 +47,23 @@ RESULTING DATAFRAME
     overflow-x:auto
 ">
 
-|     |  EXT_E |  EST_E |  AGR_E |  CSN_E |  OPN_E |
-| --: | -----: | -----: | -----: | -----: | -----: |
-|   0 | 1780.6 | 1673.4 | 3700.7 | 5490.6 | 2054.5 |
-|   1 | 7144.8 | 3341.5 | 3748.7 | 4251.6 | 4397.8 |
-|   2 | 7868.5 | 7315.1 | 7616.6 | 4394.3 | 2472.8 |
-|   3 | 5438.6 | 4069.4 | 5439.5 | 4422.1 | 3855.4 |
-|   4 | 4958.7 | 3608.7 | 4431.5 | 3708.6 | 3581.6 |
+|     |      EXT |   EST |   AGR |       CSN |  OPN |
+| --: | -------: | ----: | ----: | --------: | ---: |
+|   0 |     -0.8 |   0.5 | -0.45 |      -0.2 | 0.65 |
+|   1 | 0.555556 | -0.25 |  0.35 |      0.05 |  0.2 |
+|   2 |     0.55 |  -0.5 |     1 | -0.222222 | 0.15 |
+|   3 |    -0.45 |  0.35 |   0.2 |     -0.35 | 0.25 |
+|   4 |      0.2 |  0.25 |   0.8 |      -0.1 |  0.7 |
 
 </div>
 
-## Data Cleaning / EDA
+## Data Cleaning
 
-There are a number of NaN & 0 values within the dataset. I'm assuming that it doesn't make sense for someone to take exactly 0 milliseconds to answer a question. I'll treat 0 values as a sign of missingness.
+There are still NaN values in the data. This means that some responses were missing data for every question in a trait section.
 
-I could do permutation tests to test for missingness mechanisms and impute accordingly, but rows with missing data comprise a small portion (<1%) of the dataset. I'll just drop them.
+These rows will be dropped.
 
-Summary Statistics:
+SUMMARY OF DATA
 
 <div markdown="1" style="
     display: block; 
@@ -70,43 +71,21 @@ Summary Statistics:
     overflow-x:auto
 ">
 
-|       |       EXT_E |       EST_E |       AGR_E |       CSN_E |       OPN_E |
-| :---- | ----------: | ----------: | ----------: | ----------: | ----------: |
-| count |        9914 |        9914 |        9914 |        9914 |        9914 |
-| mean  |     15302.9 |     8166.03 |      9472.9 |     8403.17 |     5752.01 |
-| std   |      375903 |      135268 |      202282 |      107314 |     27974.2 |
-| min   |        72.1 |       132.3 |        95.2 |        40.2 |          68 |
-| 25%   |     3503.03 |     2838.12 |      3152.1 |        3260 |     2848.75 |
-| 50%   |     4599.25 |     3743.65 |      4131.8 |      4357.1 |     3780.55 |
-| 75%   |     6458.35 |      5277.5 |     5735.52 |     6189.85 |        5250 |
-| max   | 2.63604e+07 | 8.55417e+06 | 1.72713e+07 | 7.55993e+06 | 2.13966e+06 |
+|       |      EXT |       EST |      AGR |      CSN |      OPN |
+| :---- | -------: | --------: | -------: | -------: | -------: |
+| count |     9952 |      9952 |     9952 |     9952 |     9952 |
+| mean  | -0.01278 |  0.029529 | 0.385407 | 0.181257 | 0.437619 |
+| std   | 0.454289 |  0.429102 | 0.365382 |  0.36919 | 0.318982 |
+| min   |       -1 |        -1 |       -1 |       -1 |    -0.95 |
+| 25%   |    -0.35 | -0.277778 |     0.15 |     -0.1 |      0.2 |
+| 50%   |        0 |      0.05 |     0.45 |      0.2 |     0.45 |
+| 75%   |      0.3 |      0.35 |     0.65 |     0.45 |      0.7 |
+| max   |        1 |         1 |        1 |        1 |        1 |
 
 </div>
 
-There are clearly some prominent outliers. Someone took over 6 hours on average to answer each question. (I guess they left the tab open for a week)
-
-The data has a VERY heavy right skew, so I'll just drop entries that are more than 3SD above mean.
-
-Variance-Covariance Matrix:
-
-<div markdown="1" style="
-    display: block; 
-    width: 100%; 
-    overflow-x:auto
-">
-
-|       |       EXT_E |       EST_E |       AGR_E |       CSN_E |       OPN_E |
-| :---- | ----------: | ----------: | ----------: | ----------: | ----------: |
-| EXT_E | 8.33389e+08 | 1.13911e+07 |  1.1084e+07 |  1.9823e+07 | 1.02908e+07 |
-| EST_E | 1.13911e+07 | 1.20459e+08 | 1.10395e+07 | 1.80633e+07 | 9.21046e+06 |
-| AGR_E |  1.1084e+07 | 1.10395e+07 | 1.56017e+08 | 1.22064e+07 | 8.93401e+06 |
-| CSN_E |  1.9823e+07 | 1.80633e+07 | 1.22064e+07 | 1.06944e+08 | 1.35804e+07 |
-| OPN_E | 1.02908e+07 | 9.21046e+06 | 8.93401e+06 | 1.35804e+07 | 2.12597e+07 |
-
-</div>
-
-EXT_E variance is significantly larger than the that of other columns. Since PCA maximizes variance explained, it will be dominated by the EXT_E column.  
-Data should be normalized.
+Since PCA aims to maximize variance explained, columns with higher variance will be prioritized.
+Data should still be normalized.
 
 Variance-Covariance Matrix After Normalization:
 
@@ -116,41 +95,27 @@ Variance-Covariance Matrix After Normalization:
     overflow-x:auto
 ">
 
-|       |     EXT_E |     EST_E |     AGR_E |     CSN_E |     OPN_E |
-| :---- | --------: | --------: | --------: | --------: | --------: |
-| EXT_E |         1 | 0.0359518 | 0.0307388 | 0.0663997 | 0.0773118 |
-| EST_E | 0.0359518 |         1 | 0.0805271 |  0.159147 |  0.182005 |
-| AGR_E | 0.0307388 | 0.0805271 |         1 | 0.0944984 |  0.155125 |
-| CSN_E | 0.0663997 |  0.159147 | 0.0944984 |         1 |  0.284811 |
-| OPN_E | 0.0773118 |  0.182005 |  0.155125 |  0.284811 |         1 |
+| type |       EXT |        EST |        AGR |       CSN |       OPN |
+| :--- | --------: | ---------: | ---------: | --------: | --------: |
+| EXT  |         1 |  -0.215521 |   0.304984 | 0.0461086 |  0.149932 |
+| EST  | -0.215521 |          1 | -0.0573839 | -0.220419 | -0.090065 |
+| AGR  |  0.304984 | -0.0573839 |          1 |   0.15626 |  0.114062 |
+| CSN  | 0.0461086 |  -0.220419 |    0.15626 |         1 | 0.0663948 |
+| OPN  |  0.149932 |  -0.090065 |   0.114062 | 0.0663948 |         1 |
 
 </div>
-
-## Data Used
-
-HEAD OF CLEANED DATAFRAME
-
-<div markdown="1" style="
-    display: block; 
-    width: 100%; 
-    overflow-x:auto
-">
-
-|     |      EXT_E |     EST_E |      AGR_E |      CSN_E |      OPN_E |
-| --: | ---------: | --------: | ---------: | ---------: | ---------: |
-|   0 |  -0.212136 | -0.326806 |  -0.158204 | -0.0562545 |  -0.604234 |
-|   1 |  -0.026321 |  -0.17482 |  -0.154361 |  -0.176064 | -0.0960173 |
-|   2 | -0.0012521 |  0.187227 |   0.155302 |  -0.162265 |  -0.513513 |
-|   3 | -0.0854235 | -0.108499 | -0.0189965 |  -0.159577 |  -0.213654 |
-|   4 |  -0.102047 | -0.150475 | -0.0996967 |  -0.228572 |  -0.273036 |
 
 ## PCA
 
 "Hypothesis: The 5-dimensional OCEAN data set can be represented in 3 dimensions visualized by 27 clusters of points in a 3x3x3 cube."
 
-¯\\\_(ツ)\_/¯
+9k+ datapoints
 
-<iframe src="images/pca-normalized.html" width="100%" height="500px" frameBorder=0></iframe>
+<iframe src="images/pca-e-full.html" width="100%" height="500px" frameBorder=0></iframe>
+
+250 datapoints
+
+<iframe src="images/pca-e-250.html" width="100%" height="500px" frameBorder=0></iframe>
 
 Proportion of Variance Explained by Principal Components:
 
@@ -160,16 +125,15 @@ Proportion of Variance Explained by Principal Components:
     overflow-x:auto
 ">
 
-| Principal Component | Proportion of Variance Explained |
-| :------------------ | -------------------------------: |
-| PC1                 |                       0.30433279 |
-| PC2                 |                       0.19607052 |
-| PC3                 |                       0.18667428 |
-| Total               |                       0.68707758 |
-
-Only 68.7% of the variance was explained. That's quite a lot of information loss.
+|     | Proportion of Variance Explained | Cumulative Proportion |
+| :-- | -------------------------------: | --------------------: |
+| PC1 |                         0.317035 |              0.317035 |
+| PC2 |                         0.206601 |              0.523636 |
+| PC3 |                          0.18338 |              0.707016 |
 
 </div>
+
+Only 70% of variance explained. Notable information loss.
 
 Principal Component Loadings
 
@@ -179,10 +143,10 @@ Principal Component Loadings
     overflow-x:auto
 ">
 
-| Principal Component |      EXT_E |       EST_E | AGR_E      | CSN_E       | OPN_E       |
-| :------------------ | ---------: | ----------: | ---------- | ----------- | ----------- |
-| PC1                 | 0.20718773 |  0.43924379 | 0.35286461 | 0.54424389  | 0.58602329  |
-| PC2                 | 0.95986694 | -0.17942143 | -0.2068723 | -0.02957813 | -0.05284308 |
-| PC3                 | 0.10934857 |  -0.3750974 | 0.88198042 | -0.25915338 | -0.04790511 |
+|     |       EXT |      EST |       AGR |       CSN |       OPN |
+| :-- | --------: | -------: | --------: | --------: | --------: |
+| PC1 | -0.540406 | 0.444568 | -0.494664 | -0.381453 | -0.346586 |
+| PC2 | -0.364322 | -0.51093 |  -0.36901 |  0.634714 |  -0.25921 |
+| PC3 |    0.1468 | 0.160795 |  0.467782 |  0.140572 | -0.844994 |
 
 </div>
