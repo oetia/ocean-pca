@@ -1,5 +1,7 @@
 # Ocean PCA
 
+<iframe src="images/pca-clustering.html" width="100%" height="500px" frameBorder=0></iframe>
+
 <iframe src="images/pca-e-full.html" width="100%" height="500px" frameBorder=0></iframe>
 
 ## Files
